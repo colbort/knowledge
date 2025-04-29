@@ -69,7 +69,7 @@ Redis 是 key-value 数据库，key 的类型只能是 String，但是 value 的
 - Set
 - Sorted Set
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018222748.png" width="300"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_1.png" width="300"/> </div><br>
 
 **（1）String 字符串**
 
@@ -141,7 +141,7 @@ zset 的成员是唯一的,但分数(score)却可以重复。
 
 查询官方文档（[https://redis.io/topics/data-types](https://redis.io/topics/data-types)）可以看到 String 类型的 value 值最多支持的长度为 512M，所以正确的答案是 512M。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018222920.jpeg" width=""/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_2.png" width=""/> </div><br>
 
 # 4、能说一下 Redis 每种数据结构的使用场景吗？
 
@@ -185,7 +185,7 @@ zset 的成员是唯一的,但分数(score)却可以重复。
 
 以购物车为例子，用户 id 设置为 key，那么购物车里所有的商品就是用户 key 对应的值了，每个商品有 id 和购买数量，对应 hash 的结构就是商品 id 为 field，商品数量为 value。如图所示：
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223018.jpeg" width="200"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_3.png" width="200"/> </div><br>
 
 如果将商品 id 和商品数量序列化成 json 字符串，那么也可以用上面讲的 string 类型存储。下面对比一下这两种数据结构：
 
@@ -208,7 +208,7 @@ zset 的成员是唯一的,但分数(score)却可以重复。
 
 list 类型的 lrange 命令可以分页查看队列中的数据。可将每隔一段时间计算一次的排行榜存储在 list 类型中，如 QQ 音乐内地排行榜，每周计算一次存储再 list 类型中，访问接口时通过 page 和 size 分页转化成 lrange 命令获取排行榜数据。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223052.jpeg" width="200"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_4.png" width="200"/> </div><br>
 
 但是，并不是所有的排行榜都能用 list 类型实现，只有定时计算的排行榜才适合使用 list 类型存储，与定时计算的排行榜相对应的是实时计算的排行榜，list 类型不能支持实时计算的排行榜，下面介绍有序集合 sorted set 的应用场景时会详细介绍实时计算的排行榜的实现。
 
@@ -222,7 +222,7 @@ list 类型的 lrange 命令可以分页查看队列中的数据。可将每隔�
 
 key 为用户 id，value 为歌曲 id 的集合。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223310.jpeg" width="200"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_5.png" width="200"/> </div><br>
 
 **（5）Sorted Set 的使用场景**
 
@@ -232,7 +232,7 @@ key 为用户 id，value 为歌曲 id 的集合。
 
 QQ 音乐中有多种实时榜单，比如飙升榜、热歌榜、新歌榜，可以用 redis key 存储榜单类型，score 为点击量，value 为歌曲 id，用户每点击一首歌曲会更新 redis 数据，sorted set 会依据 score 即点击量将歌曲 id 排序。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223348.jpeg" width="200"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_6.png" width="200"/> </div><br>
 
 # 5、Redis 如何做持久化的？能说一下 RDB 和 AOF 的实现原理吗？
 
@@ -240,7 +240,7 @@ QQ 音乐中有多种实时榜单，比如飙升榜、热歌榜、新歌榜，�
 
 持久化（Persistence），即把数据（如内存中的对象）保存到可永久保存的存储设备中（如磁盘）。持久化的主要应用是将内存中的对象存储在数据库中，或者存储在磁盘文件中、XML 数据文件中等等。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223421.png" width=""/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_7.png" width=""/> </div><br>
 
 还可以从如下两个层面简单的理解持久化 ：
 
@@ -294,7 +294,7 @@ save ""
 
 **bgsave 工作机制**
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223529.png" width="300"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_8.png" width="300"/> </div><br>
 
 （1）执行 bgsave 命令，Redis 父进程判断当前是否存在正在执行的子进 程，如 RDB/AOF 子进程，如果存在，bgsave 命令直接返回。
 
@@ -320,7 +320,7 @@ AOF 文件名 通过 appendfilename 配置设置，默认文件名是 appendonly
 
 AOF 的工作流程操作：命令写入 （append）、文件同步（sync）、文件重写（rewrite）、重启加载 （load）。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223557.png" width="200"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_9.png" width="200"/> </div><br>
 
 （1）所有的写入命令会追加到 aof_buf（缓冲区）中。
 
@@ -354,7 +354,7 @@ auto-aof-rewrite-percentage：代表当前 AOF 文件空间 （aof_current_size�
 
 其中 aof_current_size 和 aof_base_size 可以在 info Persistence 统计信息中查看。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223632.png" width="300"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_10.png" width="300"/> </div><br>
 
 AOF 文件重写后为什么会变小？
 
@@ -364,7 +364,7 @@ AOF 文件重写后为什么会变小？
 
 **AOF 文件数据恢复**
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223700.png" width="300"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_11.png" width="300"/> </div><br>
 
 数据恢复流程说明：
 
@@ -478,7 +478,7 @@ redis 内部使用文件事件处理器 file event handler，这个文件事件�
 
 举个例子：下图是一个布隆过滤器，共有 18 个比特位，3 个哈希函数。集合中三个元素 x，y，z 通过三个哈希函数散列到不同的比特位，并将比特位置为 1。当查询元素 w 时，通过三个哈希函数计算，发现有一个比特位的值为 0，可以肯定认为该元素不在集合中。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223743.png" width="500"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_12.png" width="500"/> </div><br>
 
 **布隆过滤器优缺点**
 
@@ -523,7 +523,7 @@ redis 内部使用文件事件处理器 file event handler，这个文件事件�
 
 这种思路比较简单，就是让一个线程回写缓存，其他线程等待回写缓存线程执行完，重新读缓存即可。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018223933.png" width="500"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_13.png" width="500"/> </div><br>
 
 同一时间只有一个线程读数据库然后回写缓存，其他线程都处于阻塞状态。如果是高并发场景，大量线程阻塞势必会降低吞吐量。这种情况如何解决？大家可以在留言区讨论。
 
@@ -536,7 +536,7 @@ redis 内部使用文件事件处理器 file event handler，这个文件事件�
 - 物理不过期，针对热点 key 不设置过期时间
 - 逻辑过期，把过期时间存在 key 对应的 value 里，如果发现要过期了，通过一个后台的异步线程进行缓存的构建
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018224003.png" width="500"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_14.png" width="500"/> </div><br>
 
 从实战看这种方法对于性能非常友好，唯一不足的就是构建缓存时候，其余线程(非构建缓存的线程)可能访问的是老数据，对于不追求严格强一致性的系统是可以接受的。
 
@@ -810,7 +810,7 @@ Redis Sentinel 是 Redis 高可用的实现方案。Sentinel 是一个管理多�
 
 Redis Sentinel 架构图如下：
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018221921.png" width="500"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_15.png" width="500"/> </div><br>
 
 **哨兵模式的原理**
 
@@ -860,7 +860,7 @@ Redis Sentinel 是一个特殊的 Redis 节点。在哨兵模式创建时，需�
 
 Redis-Cluster 采用无中心结构，每个节点都保存数据，节点之间互相连接从而知道整个集群状态。
 
-<div align="center">  <img src="https://cdn.jsdelivr.net/gh/SmileLionCoder/assets@main/202010/20201018222025.png" width="500"/> </div><br>
+<div align="center">  <img src="/assets/redis_mianshi_16.png" width="500"/> </div><br>
 
 如图所示 Cluster 模式其实就是多个主从复制的结构组合起来的，每一个主从复制结构可以看成一个节点，那么上面的 Cluster 集群中就有三个节点。
 
