@@ -331,9 +331,3 @@ m.Range(func(key, value any) bool {
 5. 删除：
    - 通过 entry.p = nil/expunged 实现，不直接删 map 元素
 6. 不要把 sync.Map 当成默认 map 方案，普通业务推荐 `map + RWMutex`
-
----
-
-如果你愿意，我可以：
-- 再给一份 `sync.Map` 和 `map+RWMutex` 的 **benchmark 测试代码**
-- 或者根据你具体的业务（比如消息路由、任务缓存、在线用户表）给出**选择建议和写法模板**。
